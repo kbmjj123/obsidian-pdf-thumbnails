@@ -18,6 +18,13 @@ export class Plugin {
   addCommand(): unknown { return {} }
   addSettingTab(): void {}
   registerEvent(): void {}
+  registerMarkdownPostProcessor(): void {}
+  loadData(): Promise<unknown> {
+    return Promise.resolve(null)
+  }
+  saveData(): Promise<void> {
+    return Promise.resolve()
+  }
 }
 
 export class PluginSettingTab {
