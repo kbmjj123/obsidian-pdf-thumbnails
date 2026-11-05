@@ -77,6 +77,12 @@ define('empty', function (this: Node) {
 define('setCssStyles', function (this: HTMLElement, styles: Record<string, string>) {
   for (const [k, v] of Object.entries(styles)) this.style.setProperty(k, v)
 })
+define('addClass', function (this: HTMLElement, ...classNames: string[]) {
+  this.classList.add(...classNames)
+})
+define('removeClass', function (this: HTMLElement, ...classNames: string[]) {
+  this.classList.remove(...classNames)
+})
 define('createEl', createEl, Document.prototype)
 define('createDiv', (info?: ElementInfo, callback?: (el: HTMLDivElement) => void) => createEl('div', info, callback), Document.prototype)
 

@@ -14,7 +14,7 @@ export function renderGrid(
 ): void {
   container.empty()
   container.addClass('pdf-thumbnails-grid')
-  container.setCssStyles({ '--pdf-cols': String(opts.columns) })
+  container.style.setProperty('--pdf-cols', String(opts.columns))
 
   if (snapshot.total === 0 && !snapshot.loading) {
     const empty = container.createDiv({ cls: 'pdf-thumbnails-empty' })
