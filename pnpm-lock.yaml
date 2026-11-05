@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@kbmjj123/pdf-thumbnails-core':
-        specifier: file:../../minopdf/vue-pdf-thumbnails/packages/core
-        version: file:../../minopdf/vue-pdf-thumbnails/packages/core
+        specifier: ^0.1.0
+        version: 0.1.0
     devDependencies:
       '@types/node':
         specifier: ^22.10.2
@@ -442,8 +442,8 @@ packages:
   '@jridgewell/sourcemap-codec@1.6.0':
     resolution: {integrity: sha512-T7jf+5zgsZHwNJ4lvQ7/aezbyk0nNX+zJVWpmHA7VYsEx7a7qr5Rg5IbtJFqkgze5Y2sruq1RUY8Q837Od7iFw==}
 
-  '@kbmjj123/pdf-thumbnails-core@file:../../minopdf/vue-pdf-thumbnails/packages/core':
-    resolution: {directory: ../../minopdf/vue-pdf-thumbnails/packages/core, type: directory}
+  '@kbmjj123/pdf-thumbnails-core@0.1.0':
+    resolution: {integrity: sha512-+l8h7D25cAwjKcgqOxpDip4h8VvedwMvjXJJy9iZtEvJ3THA1A45gDxb+mIzvKaiH6ZDRol0mk9ozjX1cOkfgA==}
     engines: {node: '>=18'}
 
   '@marijn/find-cluster-break@1.0.4':
@@ -2409,7 +2409,7 @@ snapshots:
 
   '@jridgewell/sourcemap-codec@1.6.0': {}
 
-  '@kbmjj123/pdf-thumbnails-core@file:../../minopdf/vue-pdf-thumbnails/packages/core':
+  '@kbmjj123/pdf-thumbnails-core@0.1.0':
     dependencies:
       pdfjs-dist: 6.5.438
 

@@ -14,7 +14,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "@kbmjj123/pdf-thumbnails-core": "file:../../minopdf/vue-pdf-thumbnails/packages/core"
+    "@kbmjj123/pdf-thumbnails-core": "^0.1.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
