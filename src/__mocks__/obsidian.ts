@@ -2,7 +2,6 @@
  * Minimal stub of the Obsidian API for unit tests.
  * `obsidian` ships types only; vitest aliases it here via vitest.config.ts.
  */
-import type { DomElementInfo } from 'obsidian'
 
 export class Modal {
   contentEl = document.createElement('div')

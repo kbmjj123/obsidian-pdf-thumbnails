@@ -5,7 +5,18 @@
  * Production code uses those helpers instead of `document.createElement`, so
  * unit tests running in jsdom need them to exist before anything renders.
  */
-import type { DomElementInfo } from 'obsidian'
+interface DomElementInfo {
+  cls?: string | string[]
+  text?: string | DocumentFragment
+  attr?: Record<string, string | number | boolean | null>
+  href?: string
+  title?: string
+  type?: string
+  value?: string
+  placeholder?: string
+  parent?: HTMLElement
+  [key: string]: unknown
+}
 
 type ElementInfo = DomElementInfo | string
 
@@ -47,10 +58,10 @@ define('createEl', function (this: HTMLElement, tag: string, info?: ElementInfo,
   this.appendChild(node)
   return node
 })
-define('createDiv', function (this: HTMLElement, info?: ElementInfo, callback?: (el: HTMLDivElement) => void) {
+define('createDiv', function (this: HTMLElement, info?: ElementInfo, callback?: (el: HTMLElement) => void) {
   return (this as HTMLElement & { createEl: typeof createEl }).createEl('div', info, callback)
 })
-define('createSpan', function (this: HTMLElement, info?: ElementInfo, callback?: (el: HTMLSpanElement) => void) {
+define('createSpan', function (this: HTMLElement, info?: ElementInfo, callback?: (el: HTMLElement) => void) {
   return (this as HTMLElement & { createEl: typeof createEl }).createEl('span', info, callback)
 })
 define('setText', function (this: HTMLElement, val: string | DocumentFragment) {
