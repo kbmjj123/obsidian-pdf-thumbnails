@@ -1,0 +1,17 @@
+node_modules/
+
+# Lockfiles from other package managers (this project is pnpm-only)
+package-lock.json
+yarn.lock
+
+# Build output (shipped via GitHub release, not committed)
+main.js
+*.js.map
+
+# OS / editor
+.DS_Store
+.idea
+.vscode/
+
+# Test output
+coverage/

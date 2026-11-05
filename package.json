@@ -1,0 +1,33 @@
+{
+  "name": "obsidian-pdf-thumbnails",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.14.0",
+  "description": "Obsidian plugin: render PDF embeds as a lazy page-thumbnail grid with an in-note lightbox.",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node esbuild.config.mjs --watch",
+    "build": "node esbuild.config.mjs --production",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "@kbmjj123/pdf-thumbnails-core": "file:../../minopdf/vue-pdf-thumbnails/packages/core"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "esbuild": "^0.24.2",
+    "eslint": "^9.39.5",
+    "eslint-plugin-obsidianmd": "^0.4.2",
+    "jsdom": "^25.0.1",
+    "obsidian": "^1.14.4",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.72.0",
+    "vitest": "^2.1.8"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  }
+}

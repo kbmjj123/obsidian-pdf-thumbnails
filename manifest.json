@@ -1,0 +1,10 @@
+{
+  "id": "pdf-thumbnails",
+  "name": "PDF Thumbnails",
+  "version": "0.1.0",
+  "minAppVersion": "1.4.0",
+  "description": "Render ![[file.pdf]] embeds as a lazy page-thumbnail grid with an in-note lightbox. Powered by pdf.js.",
+  "author": "kbmjj123",
+  "authorUrl": "https://minopdf.com",
+  "isDesktopOnly": false
+}
