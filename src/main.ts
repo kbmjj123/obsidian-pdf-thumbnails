@@ -1,15 +1,18 @@
 import { Plugin } from 'obsidian'
-import { DEFAULT_SETTINGS, type PdfThumbnailsSettings } from './settings'
+import { DEFAULT_SETTINGS, PdfThumbnailsSettingTab, type PdfThumbnailsSettings } from './settings'
+import { installEmbedOverride, uninstallEmbedOverride } from './embed-override'
 
 export default class PdfThumbnailsPlugin extends Plugin {
   settings: PdfThumbnailsSettings = { ...DEFAULT_SETTINGS }
 
   async onload(): Promise<void> {
-    // wire embed override + settings tab in Task 9
+    await this.loadSettings()
+    this.addSettingTab(new PdfThumbnailsSettingTab(this.app, this))
+    installEmbedOverride(this, () => this.settings)
   }
 
   onunload(): void {
-    // restore patched internals in Task 9
+    uninstallEmbedOverride()
   }
 
   async loadSettings(): Promise<void> {

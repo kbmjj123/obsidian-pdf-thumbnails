@@ -42,7 +42,6 @@ export function processPdfEmbeds(
         void create(file, app, settings).then((engine) => mount(embedEl, engine, settings))
       }
     } catch (e) {
-      // eslint-disable-next-line no-console -- surface override failure, leave native embed intact
       console.error('[pdf-thumbnails] override failed, leaving native embed', e)
     }
   }
