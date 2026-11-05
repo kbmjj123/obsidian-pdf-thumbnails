@@ -48,15 +48,7 @@ export class Notice {
   constructor(public message: string) {}
 }
 
-/** Minimal Embed stub so embed-override tests can patch loadFile. */
-export class Embed {
-  containerEl: HTMLElement = document.createElement('div')
-  linkpath = ''
-  constructor(public app?: unknown) {}
-  loadFile(): void {}
-}
-
-/** TFile-ish shape used by tests. */
+/** TFile-ish shape used by tests (also resolves the runtime `TFile` import from 'obsidian'). */
 export class TFile {
   constructor(
     public path: string,
