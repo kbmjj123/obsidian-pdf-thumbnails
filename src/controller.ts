@@ -1,7 +1,17 @@
-import type { PdfPreviewEngine, PdfPreviewPageView, PreviewTexts } from '@kbmjj123/pdf-thumbnails-core'
+import type { PdfPreviewPageView, PdfPreviewSnapshot, PreviewTexts } from '@kbmjj123/pdf-thumbnails-core'
 import { renderGrid } from './grid'
 import { openLightbox } from './lightbox'
 import type { PdfThumbnailsSettings } from './settings'
+
+/** Structural subset of the core engine the controller actually uses. */
+export interface ThumbnailsEngine {
+  subscribe(cb: () => void): () => void
+  getSnapshot(): PdfPreviewSnapshot
+  rebuild(): void
+  ensure(range: string): void
+  dispose(): void
+}
+
 
 /** Convert a scroll offset into a 1-based inclusive page range string. */
 export function computeVisibleRange(
@@ -12,12 +22,11 @@ export function computeVisibleRange(
   buffer: number,
 ): string {
   if (rowHeight <= 0 || total <= 0) return `1-${Math.max(1, total)}`
-  const first = Math.floor(scrollTop / rowHeight) + 1
-  const visibleRows = Math.ceil(viewportHeight / rowHeight)
-  const last = first + visibleRows - 1
-  const lo = Math.max(1, first - buffer)
-  const hi = Math.min(total, last + buffer)
-  return `${lo}-${hi}`
+  const firstVisible = Math.floor(scrollTop / rowHeight) + 1
+  const lastVisible = firstVisible + Math.ceil(viewportHeight / rowHeight) - 1
+  const lo = Math.max(1, Math.min(total, firstVisible - buffer))
+  const hi = Math.min(total, Math.max(1, lastVisible + buffer))
+  return `${lo}-${Math.max(lo, hi)}`
 }
 
 export interface PdfThumbnailsHandle {
@@ -26,7 +35,7 @@ export interface PdfThumbnailsHandle {
 
 export function mountPdfThumbnails(
   container: HTMLElement,
-  engine: PdfPreviewEngine,
+  engine: ThumbnailsEngine,
   settings: PdfThumbnailsSettings,
   texts: PreviewTexts,
 ): PdfThumbnailsHandle {
