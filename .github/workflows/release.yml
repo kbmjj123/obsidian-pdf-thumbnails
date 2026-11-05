@@ -1,0 +1,80 @@
+# Release workflow for obsidian-pdf-thumbnails.
+#
+# IMPORTANT — dependency before tagging a release:
+#   During development the plugin depends on the local core build via a
+#   `file:` dependency in package.json:
+#     "@kbmjj123/pdf-thumbnails-core": "file:../../minopdf/vue-pdf-thumbnails/packages/core"
+#   That path does NOT exist in CI (only this repo is checked out), so
+#   `pnpm install --frozen-lockfile` would fail. Before pushing a release tag:
+#     1. `npm login` and publish the core package as `@kbmjj123/pdf-thumbnails-core@0.1.1`.
+#     2. Change the plugin dependency to `"@kbmjj123/pdf-thumbnails-core": "^0.1.1"`.
+#     3. Run `pnpm install` so pnpm-lock.yaml is updated, and commit it.
+#   The workflow below then resolves the published package from the registry.
+
+name: Release
+
+on:
+  push:
+    tags:
+      - '*'
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Set up pnpm
+        run: |
+          corepack enable
+          pnpm --version
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck and test
+        run: |
+          pnpm typecheck
+          pnpm test
+
+      - name: Verify tag matches manifest.json
+        run: |
+          version=$(node -p "require('./manifest.json').version")
+          if [ "$version" != "${GITHUB_REF_NAME}" ]; then
+            echo "Tag ${GITHUB_REF_NAME} does not match manifest.json version ${version}"
+            exit 1
+          fi
+
+      - name: Build
+        run: pnpm build
+
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: |
+            main.js
+            manifest.json
+            styles.css
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          generate_release_notes: true
+          files: |
+            main.js
+            manifest.json
+            styles.css
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
